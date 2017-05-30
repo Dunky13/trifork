@@ -1,0 +1,23 @@
+header{
+	width: 100%;
+	background-color: #EF6C00;
+	min-height: min-content;
+	height: 15vh;
+
+	background-image: url("/assets/Axon Header Image.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	// background-attachment: fixed;
+
+	text-transform: uppercase;
+
+	text-align: center;
+	color: #FFFFFF;
+	#title {
+		padding: 4vh 1vw;
+		#game-changing{
+			color: #FFFF99;
+		}
+	}
+}

@@ -1,0 +1,22 @@
+<div id="parent">
+	<div [id]="i" class="group" *ngFor="let item of items.getGroups(); let i = index">
+		<div class="item" *ngFor="let subItem of item.getItems(); let j = index">
+			<md-checkbox class="checkbox" (change)="items.changeState(i, j)" [disabled]="items.get(i, j).isDisabled()">{{subItem.getLabel()}}</md-checkbox>
+		</div>
+	</div>
+	<div class="group">
+		<md-input-container>
+			<input mdInput placeholder="Email Address" type="email" [(ngModel)]="email">
+			<md-error></md-error>
+		</md-input-container>
+	</div>
+	<div class="group">
+		<md-input-container>
+			<input mdInput placeholder="Mobile Number" type="tel" [(ngModel)]="tel">
+			<md-error></md-error>
+		</md-input-container>
+	</div>
+	<div class="submit">
+		<button flex="33" md-raised-button [disabled]="!isFinished()" (click)="submit()">Submit</button>
+	</div>
+</div>

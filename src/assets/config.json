@@ -1,0 +1,13 @@
+{
+	"technologies": [
+		["Spring Boot", "Dropwizzard"],
+		["Kubernetes", "Apache Mesos (KILL)"],
+		["Axon Framework", "Eventuate"],
+		["Docket", "Puppet"],
+		["Angular", "React"],
+		["Apache Flink", "RabbitMQ"],
+		["Elastic Stack", "TensorFlow"],
+		["Kotlin", "Scala"]
+	],
+	"storageLocation": "http:/Somelocation.net/elastic"
+}
