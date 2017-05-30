@@ -13,9 +13,9 @@ import { HeaderComponent } from './header/header.component';
 import { BodyComponent } from './body/body.component';
 
 export function loadConfig(config: ConfigService) {
-	config.load();
-	return config;
+	return () => config.load();
 }
+
 @NgModule({
 	declarations: [
 		AppComponent,
