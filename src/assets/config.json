@@ -1,9 +1,9 @@
 {
 	"technologies": [
-		["Spring Boot", "Dropwizzard"],
-		["Kubernetes", "Apache Mesos (KILL)"],
+		["Spring Boot", "Dropwizard"],
+		["Kubernetes", "Apache Mesos"],
 		["Axon Framework", "Eventuate"],
-		["Docket", "Puppet"],
+		["Docker", "Puppet"],
 		["Angular", "React"],
 		["Apache Flink", "RabbitMQ"],
 		["Elastic Stack", "TensorFlow"],
