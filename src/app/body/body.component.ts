@@ -12,10 +12,12 @@ export class BodyComponent implements OnInit {
 	private maxNumber: number;
 	public items: Items;
 	private selected: Map<number, string>;
+	private shuffle: boolean;
 	public email: string;
 	public tel: string;
 	constructor(private _config: ConfigService, private http: Http) {
-		this.items = new Items(_config.get('technologies'));
+		this.shuffle = _config.get('shuffle');
+		this.items = new Items(_config.get('technology'), this.shuffle);
 		this.maxNumber = this.items.size();
 		this.selected = new Map();
 	}
@@ -47,6 +49,9 @@ export class BodyComponent implements OnInit {
 			data.append('mobile_number', this.tel);
 		const url = this._config.get('storageLocation', );
 		this.http.post(url, data).subscribe(_data => { console.log(_data); });
+		this.items.init();
+		this.email = "";
+		this.tel = "";
 		// console.log(data);
 	}
 

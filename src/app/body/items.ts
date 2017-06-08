@@ -68,10 +68,21 @@ export class ItemGroup {
 }
 export class Items {
 	private groups: Array<ItemGroup>;
-	constructor(items: Array<Array<string>>) {
+	private originalItems: Array<string>;
+	private mustShuffle: boolean;
+	constructor(items: Array<string>, shuffle: boolean) {
+		this.originalItems = items;
+		this.mustShuffle = shuffle;
+		this.init();
+	}
+	init() {
+		let items = this.originalItems;
+		if(this.mustShuffle){
+			this.shuffle(items);
+		}
 		this.groups = [];
-		for (const item of items) {
-			this.groups.push(new ItemGroup(item));
+		for (let i = 0; i < items.length; i+=2) {
+			this.groups.push(new ItemGroup([items[i], items[i+1]]));
 		}
 	}
 	changeState(i: number, j: number) {
@@ -102,5 +113,11 @@ export class Items {
 	}
 	size(): number {
 		return this.groups.length;
+	}
+	shuffle(a) {
+    	for (let i = a.length; i; i--) {
+        	let j = Math.floor(Math.random() * i);
+        	[a[i - 1], a[j]] = [a[j], a[i - 1]];
+    	}
 	}
 }
