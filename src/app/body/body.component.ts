@@ -46,8 +46,8 @@ export class BodyComponent implements OnInit {
     const data = {
       "datetime": new Date().getTime(),
       "email_address": this.email,
-      "phone_number": this.tel,
-      "round1": this.items.getLabels()
+      "name": this.tel,
+      "technology": this.items.getLabels()
     };
 
     console.log(data);
