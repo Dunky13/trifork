@@ -9,7 +9,7 @@ import { ConfigService } from '../config.service';
 export class HeaderComponent implements OnInit, AfterViewInit {
 	public maxNumber: number;
 	constructor(private _config: ConfigService) {
-		this.maxNumber = _config.get('technologies').length;
+		this.maxNumber = _config.get('technology').length / 2;
 	}
 
 	ngOnInit() {
