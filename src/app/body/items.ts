@@ -76,13 +76,13 @@ export class Items {
 		this.init();
 	}
 	init() {
-		let items = this.originalItems;
-		if(this.mustShuffle){
+		const items = this.originalItems;
+		if (this.mustShuffle) {
 			this.shuffle(items);
 		}
 		this.groups = [];
-		for (let i = 0; i < items.length; i+=2) {
-			this.groups.push(new ItemGroup([items[i], items[i+1]]));
+		for (let i = 0; i < items.length; i += 2) {
+			this.groups.push(new ItemGroup([items[i], items[i + 1]]));
 		}
 	}
 	changeState(i: number, j: number) {
@@ -115,9 +115,9 @@ export class Items {
 		return this.groups.length;
 	}
 	shuffle(a) {
-    	for (let i = a.length; i; i--) {
-        	let j = Math.floor(Math.random() * i);
-        	[a[i - 1], a[j]] = [a[j], a[i - 1]];
-    	}
+		for (let i = a.length; i; i--) {
+			const j = Math.floor(Math.random() * i);
+			[a[i - 1], a[j]] = [a[j], a[i - 1]];
+		}
 	}
 }
