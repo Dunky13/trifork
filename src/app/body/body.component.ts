@@ -38,7 +38,7 @@ export class BodyComponent implements OnInit {
 			this.email.indexOf('.') > 0;
 		const telValid = typeof this.name !== 'undefined' &&
 			this.name.length > 0;
-		// console.log(labelValid, emailValid, telValid);
+		console.log(labelValid, emailValid, telValid);
 		return labelValid && emailValid && telValid;
 	}
 
