@@ -25,7 +25,7 @@ async function main() {
   let step = 0;
   await new Promise((resolve, reject) => {
     const timeout = setTimeout(() => reject(new Error('Watcher did not complete error recovery')), 120000);
-    watcher = compiler.watch({}, (error, stats) => {
+    watcher = compiler.watch(compiler.options.watchOptions, (error, stats) => {
       try {
         assert.ifError(error);
         const errors = stats.compilation.errors.map(item => item.message).join('\n');
