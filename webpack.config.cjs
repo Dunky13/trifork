@@ -28,8 +28,20 @@ module.exports = (env, argv) => {
     devServer: { host: '0.0.0.0', port: 4200, historyApiFallback: true },
     plugins: [
       { apply(compiler) {
-        compiler.hooks.beforeCompile.tapPromise('AngularAot', () => compile(production));
+        let compilationError;
+        compiler.hooks.beforeCompile.tapPromise('AngularAot', async () => {
+          compilationError = undefined;
+          try {
+            await compile(production);
+            // AOT rewrites generated files outside Webpack's watched source graph.
+            compiler.inputFileSystem.purge();
+          } catch (error) {
+            if (production) throw error;
+            compilationError = error;
+          }
+        });
         compiler.hooks.thisCompilation.tap('SourceInputs', compilation => {
+          if (compilationError) compilation.errors.push(compilationError);
           for (const file of fs.globSync('src/**/*')) {
             if (fs.statSync(file).isFile()) compilation.fileDependencies.add(path.resolve(file));
           }

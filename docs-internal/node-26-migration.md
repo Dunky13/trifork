@@ -11,7 +11,10 @@ production environment and supplies compiled component Sass through Angular's
 resource-host interface. Generated factories are included in TypeScript
 checking and compilation. Webpack bundles those factories. Development builds
 watch original sources and regenerate their AOT output. Generated intermediates
-are ignored by Git.
+are ignored by Git. Compiler failures become recoverable development compilation
+errors while production still fails. Each successful AOT pass invalidates the
+generated-file read cache. `npm run test:watch` checks TypeScript and Sass error
+recovery and production rejection in an isolated temporary source copy.
 
 All original TSLint rules remain enabled, including the template access and
 injectable rules. Codelyzer 3.2.2 supports those rules with TSLint 5.20.1 while

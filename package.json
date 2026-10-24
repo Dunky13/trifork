@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit -p src/tsconfig.app.json && tsc --noEmit -p src/tsconfig.spec.json",
     "test": "npm run typecheck && karma start karma.conf.js --single-run",
     "lint": "tslint --project src/tsconfig.app.json && tslint --project src/tsconfig.spec.json",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "test:watch": "node scripts/test-watch.cjs"
   },
   "private": true,
   "dependencies": {
