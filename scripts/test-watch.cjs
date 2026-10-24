@@ -29,15 +29,17 @@ async function main() {
       try {
         assert.ifError(error);
         const errors = stats.compilation.errors.map(item => item.message).join('\n');
-        if (step === 1 || step === 3) {
+        if (step === 1 || step === 3 || step === 5) {
           assert.equal(stats.hasErrors(), true, 'Invalid source must fail compilation');
-          assert.match(errors, step === 1 ? /not assignable to type/ : /Undefined variable/);
+          assert.match(errors, step === 1 ? /not assignable to type/
+            : step === 3 ? /Undefined variable/ : /ENOENT|not (?:found|exist)|Could not resolve/i);
         } else {
           assert.equal(stats.hasErrors(), false, errors);
           const main = [...stats.compilation.assetsInfo.keys()].find(file => /^main\.[^.]+\.js$/.test(file));
           assert.ok(main, 'Development entry bundle must exist');
           const bundle = fs.readFileSync(path.join(temporary, 'dist', main), 'utf8');
-          assert.ok(bundle.includes(step === 2 ? 'watch-verified' : 'game-changing'));
+          assert.ok(bundle.includes(step === 2 ? 'watch-verified'
+            : step === 6 ? 'file-restored' : 'game-changing'));
           if (step === 4) assert.ok(!bundle.includes('watch-verified'));
         }
         step += 1;
@@ -53,7 +55,13 @@ async function main() {
             fs.writeFileSync(header, originalHtml);
             fs.writeFileSync(scss, originalScss);
           }
-          if (step === 5) {
+          if (step === 5) fs.unlinkSync(header);
+          if (step === 6) {
+            // Restore only the missing template: no other source may trigger recovery.
+            fs.writeFileSync(header, originalHtml.replace('game-changing', 'file-restored'));
+          }
+          if (step === 7) fs.writeFileSync(header, originalHtml);
+          if (step === 8) {
             clearTimeout(timeout);
             resolve();
           }
@@ -77,7 +85,7 @@ async function main() {
       resolve();
     } catch (failure) { reject(failure); }
   }));
-  console.log('PASS: TypeScript and Sass watcher recovery; generated output refresh; fatal production error');
+  console.log('PASS: TypeScript, Sass and missing-template watcher recovery; generated output refresh; fatal production error');
 }
 main().catch(error => {
   console.error(error);

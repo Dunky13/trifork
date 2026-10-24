@@ -14,7 +14,9 @@ watch original sources and regenerate their AOT output. Generated intermediates
 are ignored by Git. Compiler failures become recoverable development compilation
 errors while production still fails. Each successful AOT pass invalidates the
 generated-file read cache. `npm run test:watch` checks TypeScript and Sass error
-recovery and production rejection in an isolated temporary source copy.
+recovery, deletion/restoration of a template, and production rejection in an
+isolated temporary source copy. The source directory is watched as a recursive
+context so newly created or restored resources trigger compilation.
 
 All original TSLint rules remain enabled, including the template access and
 injectable rules. Codelyzer 3.2.2 supports those rules with TSLint 5.20.1 while
@@ -40,10 +42,14 @@ exploitability proof. No claim that these framework advisories are fixed is made
 There is no patched Angular 4 release. Removing the framework findings requires
 a supported Angular major, replacing removed `@angular/http` APIs, and migrating
 the legacy Material component APIs. That is a separate framework migration with
-UI fidelity and API-contract review, beyond this behavior-preserving toolchain
-candidate. Do not represent a successful Node build as full dependency-security
-approval. Root owns the decision on any retained framework risk and the
-subsequent merge or delivery gates.
+UI fidelity and API-contract review. The accepted scope here is the bounded
+Node 26/toolchain migration with this baseline framework risk retained. Every
+package flagged by the candidate audit was already declared in the original
+package manifest; no newly introduced package name appears in that audit. The
+original repository had no lockfile and its installation fails on Node 26, so
+this comparison is not a frozen-install baseline audit or an exploitability
+assessment. Do not represent a successful Node build as full dependency-security
+approval. Root owns the subsequent merge and delivery gates.
 
 No established publication workflow or owned deployment endpoint has been
 identified in this repository. The existing configuration is preserved; no new

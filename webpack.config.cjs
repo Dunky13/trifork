@@ -42,6 +42,8 @@ module.exports = (env, argv) => {
         });
         compiler.hooks.thisCompilation.tap('SourceInputs', compilation => {
           if (compilationError) compilation.errors.push(compilationError);
+          // Creation/restoration of a missing AOT resource must also trigger a rebuild.
+          compilation.contextDependencies.add(path.resolve('src'));
           for (const file of fs.globSync('src/**/*')) {
             if (fs.statSync(file).isFile()) compilation.fileDependencies.add(path.resolve(file));
           }
