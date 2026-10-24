@@ -40,3 +40,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Node 26 build and browser-test intermediates
+.build/
+.build-source/
+playwright-report/
+test-results/

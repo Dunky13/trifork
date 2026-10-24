@@ -57,7 +57,7 @@ export class BodyComponent implements OnInit {
 		const password = this._config.get('password');
 		const base64 = btoa(username + ':' + password);
 		const headers = new Headers();
-		headers.append('Authorization', 'Basic '+ base64);
+		headers.append('Authorization', 'Basic ' + base64);
 		headers.append('Content-Type', 'application/json');
 
 		const options = new RequestOptions({
