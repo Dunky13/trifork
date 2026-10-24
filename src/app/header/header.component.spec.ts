@@ -1,25 +1,16 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
+import { AppModule } from '../app.module';
 import { HeaderComponent } from './header.component';
+import { testProviders } from '../test-support.spec';
 
 describe('HeaderComponent', () => {
-  let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(HeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should be created', () => {
-    expect(component).toBeTruthy();
-  });
+	beforeEach(() => {
+		return TestBed.configureTestingModule({ imports: [AppModule], providers: testProviders }).compileComponents();
+	});
+	it('should create the header with the configured pair count', () => {
+		const fixture = TestBed.createComponent(HeaderComponent);
+		fixture.detectChanges();
+		expect(fixture.componentInstance).toBeTruthy();
+		expect(fixture.nativeElement.textContent).toContain('(Choose 2)');
+	});
 });

@@ -1,45 +1,24 @@
-// Karma configuration file, see link for more information
-// https://karma-runner.github.io/0.13/config/configuration-file.html
+const path = require('node:path');
+process.env.CHROME_BIN = process.env.CHROME_BIN || require('@playwright/test').chromium.executablePath();
 
 module.exports = function (config) {
   config.set({
-    basePath: '',
-    frameworks: ['jasmine', '@angular/cli'],
-    plugins: [
-      require('karma-jasmine'),
-      require('karma-chrome-launcher'),
-      require('karma-jasmine-html-reporter'),
-      require('karma-coverage-istanbul-reporter'),
-      require('@angular/cli/plugins/karma')
-    ],
-    client:{
-      clearContext: false // leave Jasmine Spec Runner output visible in browser
-    },
+    frameworks: ['jasmine', 'webpack'],
+    proxies: { '/assets/': '/base/src/assets/' },
     files: [
-      { pattern: './src/test.ts', watched: false }
-			{ pattern: './node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css' }
+      { pattern: './src/assets/**/*', included: false, watched: false },
+      { pattern: './src/polyfills.ts', watched: false },
+      { pattern: './src/test.ts', watched: false },
+      { pattern: './node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css', watched: false },
     ],
-    preprocessors: {
-      './src/test.ts': ['@angular/cli']
+    preprocessors: { './src/polyfills.ts': ['webpack'], './src/test.ts': ['webpack'] },
+    webpack: {
+      mode: 'development', devtool: 'inline-source-map', parallelism: 2,
+      resolve: { extensions: ['.ts', '.js'] },
+      module: { rules: [{ test: /\.ts$/, loader: path.resolve('scripts/typescript-loader.cjs') }] },
     },
-    mime: {
-      'text/x-typescript': ['ts','tsx']
-    },
-    coverageIstanbulReporter: {
-      reports: [ 'html', 'lcovonly' ],
-      fixWebpackSourcePaths: true
-    },
-    angularCli: {
-      environment: 'dev'
-    },
-    reporters: config.angularCli && config.angularCli.codeCoverage
-              ? ['progress', 'coverage-istanbul']
-              : ['progress', 'kjhtml'],
-    port: 9876,
-    colors: true,
-    logLevel: config.LOG_INFO,
-    autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false
+    reporters: ['progress'], browsers: ['ChromeHeadless'], concurrency: 1,
+    singleRun: true, autoWatch: false,
+    client: { clearContext: false },
   });
 };

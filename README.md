@@ -1,28 +1,28 @@
 # Trifork
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.6.
+Use Node.js 26.12.1, selected by `.nvmrc` and the package engine.
 
-## Development server
+```sh
+npm ci
+npx playwright install chromium
+npm run lint
+npm test
+npm run build
+npm run e2e
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+`npm start` serves the development build on all interfaces at port 4200 and
+rebuilds when source files change. `npm run build` writes an AOT production site
+to `dist/`. `npm run ng -- build` retains a compatibility command for the build,
+serve, test, lint and e2e tasks; obsolete CLI scaffolding is no longer installed.
 
-## Code scaffolding
+The build uses the matching Angular 4 compiler, modern Webpack and Dart Sass.
+The existing survey components, templates, styles, assets and HTTP payloads are
+preserved. Workbox generates the static offline worker at `worker-basic.min.js`.
+Karma runs the Angular unit tests in Chromium; Playwright replaces Protractor
+for production submission, mobile and offline-navigation checks. Browser tests
+use fixture configuration and intercept submission requests.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+See [the migration handoff](docs-internal/node-26-migration.md) for the remaining
+legacy framework security boundary. This change does not establish a release or
+deployment target and does not publish the site.
